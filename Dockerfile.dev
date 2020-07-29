@@ -1,0 +1,16 @@
+FROM node:alpine
+
+# Onde eu instalo os arquivos dentro do file system q vem do espelho
+WORKDIR '/app'
+
+# Copia o arquivo package.json antes do npm porque caso eu mude algum arquivo do projeto eu nao preciso buscar todas as dependencias ja q o package.json nao muda
+COPY package.json .
+
+# Instalo as dependencias
+RUN npm install
+
+# Copio todos os arquivos do projeto
+COPY . .
+
+# Rodo meu comando padrao da imagem
+CMD ["npm", "run", "start"]

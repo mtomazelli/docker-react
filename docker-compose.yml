@@ -1,0 +1,25 @@
+version: '3' # Tem q ver qual é a versão q precisa ser usada
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev # Aponta q é pra usar o arquivo docker de testes..se nao coloca nada ele só prcura por 'Dockerfile'
+        ports:
+            - "3000:3000"              # Mapeia a porta local com a porta do programa no container
+        volumes:
+            - /app/node_modules        # Não mapeia o node_modules
+            - .:/app                   # Realiza o mapeamento das pastas do app do container pras minhas pastas locais
+        environment:
+            - CHOKIDAR_USEPOLLING=true # Pra conseguir usar o autorefresh do react no projeto
+        stdin_open: true               # Pra nao iniciar o servidor no container e ele cair em seguida
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /app/node_modules
+            - .:/app
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        stdin_open: true
+        command: ["npm", "run", "test"] # Estou sobrescrevendo o metodo inicial do container por este definido aqui
