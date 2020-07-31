@@ -1,5 +1,5 @@
 # Primeira parte serve pra construir a parte do npm e gerar todo o build do projeto
-FROM node:alpine AS builder 
+FROM node:alpine
 WORKDIR '/app'
 COPY package*.json ./
 RUN npm install
