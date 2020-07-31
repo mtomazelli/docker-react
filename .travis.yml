@@ -8,3 +8,15 @@ before_install:
 
 script:
     - docker run -e CI=true mtomazelli/docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "sa-east-1"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-sa-east-1-906040740410"
+    bucket_path: "docker-react"
+    on:
+        branch: master # So quero atualizar as coisas em producao quando eu fizer um ajuste no branch master
+    access_key_id: $AWS_ACCESS_KEY # Criei uma chave na amazon e salvei no travis pra nao ter q escrever aqui no arquivo
+    secret_access_key: $AWS_SECRET_KEY # Criei uma chave na amazon e salvei no travis pra nao ter q escrever aqui no arquivo
